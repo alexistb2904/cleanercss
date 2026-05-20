@@ -1,8 +1,8 @@
 {
 	"name": "cleanercss",
-	"displayName": "CleanerCSS - Safe CSS Cleaner",
+	"displayName": "CleanerCSS - Unused CSS Cleaner",
 	"description": "Safely find and remove unused CSS/SCSS selectors using conservative workspace scanning, reviewable patches, and local snapshots.",
-	"version": "0.1.8",
+	"version": "0.1.95",
 	"publisher": "alexistb2904",
 	"author": "alexistb2904",
 	"license": "MIT",

@@ -11,7 +11,8 @@ export class DiffPreviewControls implements vscode.Disposable {
       vscode.commands.registerCommand('cleanerCSS.preview.accept', () => this.resolve('accept')),
       vscode.commands.registerCommand('cleanerCSS.preview.reject', () => this.resolve('reject')),
       vscode.commands.registerCommand('cleanerCSS.preview.savePatch', () => this.resolve('patch')),
-      vscode.commands.registerCommand('cleanerCSS.preview.openReport', () => this.resolve('report'))
+      vscode.commands.registerCommand('cleanerCSS.preview.openReport', () => this.resolve('report')),
+      vscode.commands.registerCommand('cleanerCSS.preview.cancel', () => this.resolve(undefined))
     );
   }
 

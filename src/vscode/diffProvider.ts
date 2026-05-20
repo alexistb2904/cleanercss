@@ -19,7 +19,9 @@ export class DiffProvider {
 		const target = vscode.Uri.joinPath(dir, `${Date.now()}-${path.basename(originalUri.fsPath)}.cleanercss-preview`);
 		await vscode.workspace.fs.writeFile(target, Buffer.from(proposedText, "utf8"));
 		await vscode.commands.executeCommand("vscode.diff", originalUri, target, title);
-		return { previewUris: [target] };
+		const handle = { previewUris: [target] } as DiffPreviewHandle;
+		this.attachPreviewCloseWatcher(handle);
+		return handle;
 	}
 
 	async closePreview(preview: DiffPreviewHandle | vscode.Uri | undefined): Promise<void> {
@@ -41,7 +43,9 @@ export class DiffProvider {
 		const target = vscode.Uri.joinPath(dir, `${Date.now()}-${path.basename(currentUri.fsPath)}.snapshot`);
 		await vscode.workspace.fs.writeFile(target, Buffer.from(snapshotText, "utf8"));
 		await vscode.commands.executeCommand("vscode.diff", currentUri, target, title);
-		return { previewUris: [target] };
+		const handle = { previewUris: [target] } as DiffPreviewHandle;
+		this.attachPreviewCloseWatcher(handle);
+		return handle;
 	}
 
 	async openAppliedSnapshotDiff(currentUri: vscode.Uri, originalText: string, cleanedText: string | undefined, title = "CleanerCSS Applied Diff"): Promise<DiffPreviewHandle> {
@@ -57,7 +61,26 @@ export class DiffProvider {
 		}
 
 		await vscode.commands.executeCommand("vscode.diff", original, cleaned, title);
-		return { previewUris: cleanedText !== undefined ? [original, cleaned] : [original] };
+		const handle = { previewUris: cleanedText !== undefined ? [original, cleaned] : [original] } as DiffPreviewHandle;
+		this.attachPreviewCloseWatcher(handle);
+		return handle;
+	}
+
+	private attachPreviewCloseWatcher(preview: DiffPreviewHandle): void {
+		const previewUris = this.normalizePreviewUris(preview);
+		if (previewUris.length === 0) return;
+
+		const disposable = vscode.workspace.onDidCloseTextDocument(async (doc) => {
+			try {
+				if (previewUris.some((u) => u.toString() === doc.uri.toString())) {
+					void vscode.commands.executeCommand("cleanerCSS.preview.cancel");
+					await this.deletePreviewFiles(previewUris);
+					disposable.dispose();
+				}
+			} catch {
+				// ignore
+			}
+		});
 	}
 
 	createPatch(filePath: string, before: string, after: string): string {
