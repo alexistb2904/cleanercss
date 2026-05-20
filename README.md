@@ -1,11 +1,11 @@
-# CleanerCSS — Safe, conservative unused CSS remover
+# CleanerCSS - Safe, conservative unused CSS remover
 
 CleanerCSS helps you safely detect and remove unused selectors from CSS and SCSS files without breaking your app. It uses workspace-wide usage scanning, conservative heuristics for frameworks and dynamic classes, and always shows a native VS Code diff preview before writing changes.
 
 Key points:
 
 - Conservative by design: uncertain or dynamic selectors are preserved by default.
-- Native VS Code diff preview and WorkspaceEdit application — you always review before changes.
+- Native VS Code diff preview and WorkspaceEdit application - you always review before changes.
 - Local snapshots and history for safe rollback.
 - Configurable safelists, framework hints and scanning options.
 
@@ -26,21 +26,21 @@ Key points:
 
 ## Commands
 
-- `cleanerCSS.cleanCurrentFile` — Clean the active CSS/SCSS file (opens diff preview).
-- `cleanerCSS.analyzeCurrentFile` — Run analysis and show results (Problems, report, or ask).
-- `cleanerCSS.cleanWorkspace` — Run cleanup across the workspace (reviewable patches).
-- `cleanerCSS.openHistory` — Open local history of CleanerCSS snapshots.
-- `cleanerCSS.restoreFromHistory` — Restore a saved snapshot.
-- `cleanerCSS.openSettings` — Open CleanerCSS settings.
+- `cleanerCSS.cleanCurrentFile` - Clean the active CSS/SCSS file (opens diff preview).
+- `cleanerCSS.analyzeCurrentFile` - Run analysis and show results (Problems, report, or ask).
+- `cleanerCSS.cleanWorkspace` - Run cleanup across the workspace (reviewable patches).
+- `cleanerCSS.openHistory` - Open local history of CleanerCSS snapshots.
+- `cleanerCSS.restoreFromHistory` - Restore a saved snapshot.
+- `cleanerCSS.openSettings` - Open CleanerCSS settings.
 
 ## Configuration highlights
 
 Configure behaviour under the `cleanerCSS.*` settings. Important ones:
 
-- `cleanerCSS.safelist` / `cleanerCSS.safelistPatterns` — never-remove selectors.
-- `cleanerCSS.enableScssSupport` — enable conservative SCSS parsing.
-- `cleanerCSS.minConfidenceToRemove` — confidence threshold before proposing removals.
-- `cleanerCSS.analysisOutput` — where analysis results appear (`problems`, `markdownReport`, `ask`).
+- `cleanerCSS.safelist` / `cleanerCSS.safelistPatterns` - never-remove selectors.
+- `cleanerCSS.enableScssSupport` - enable conservative SCSS parsing.
+- `cleanerCSS.minConfidenceToRemove` - confidence threshold before proposing removals.
+- `cleanerCSS.analysisOutput` - where analysis results appear (`problems`, `markdownReport`, `ask`).
 
 See `package.json` for the full configuration schema.
 
@@ -66,4 +66,4 @@ npm run package
 
 ## License
 
-MIT — see the `LICENSE` file.
+MIT - see the `LICENSE` file.
