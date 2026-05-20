@@ -9,6 +9,13 @@ Key points:
 - Local snapshots and history for safe rollback.
 - Configurable safelists, framework hints and scanning options.
 
+## Visual Editor
+<img width="600" height="337" alt="2026-05-2021-49-38-ezgif com-video-to-gif-converter" src="https://github.com/user-attachments/assets/5847f2d0-dcf3-46a4-a2a7-ddf4707be1b4" />
+
+## Revert your changes 
+<img width="800" height="450" alt="2026-05-2021-48-35-ezgif com-video-to-gif-converter" src="https://github.com/user-attachments/assets/5a6ab351-7dca-415b-a992-eff4e951c36f" />
+
+
 ## Quick start
 
 1. Open any `.css` or `.scss` file in your workspace.
