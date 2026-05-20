@@ -1,0 +1,564 @@
+{
+	"name": "cleanercss",
+	"displayName": "CleanerCSS - Safe CSS Cleaner",
+	"description": "Safely find and remove unused CSS/SCSS selectors using conservative workspace scanning, reviewable patches, and local snapshots.",
+	"version": "0.1.8",
+	"publisher": "alexistb2904",
+	"author": "alexistb2904",
+	"license": "MIT",
+	"engines": {
+		"vscode": "^1.93.0"
+	},
+	"categories": [
+		"Linters",
+		"Formatters",
+		"Other"
+	],
+	"keywords": [
+		"css",
+		"scss",
+		"unused css",
+		"cleaner",
+		"postcss",
+		"selector",
+		"refactor"
+	],
+	"main": "./dist/extension.js",
+	"icon": "resources/icon-128.png",
+	"activationEvents": [
+		"workspaceContains:**/*.css",
+		"workspaceContains:**/*.scss"
+	],
+	"contributes": {
+		"mcpServerDefinitionProviders": [
+			{
+				"id": "cleanerCSS.mcpProvider",
+				"label": "CleanerCSS MCP Server"
+			}
+		],
+		"commands": [
+			{
+				"command": "cleanerCSS.cleanCurrentFile",
+				"title": "CleanerCSS: Clean Current File",
+				"category": "CleanerCSS",
+				"icon": "$(sparkle)"
+			},
+			{
+				"command": "cleanerCSS.analyzeCurrentFile",
+				"title": "CleanerCSS: Analyze Current File",
+				"category": "CleanerCSS",
+				"icon": "$(search)"
+			},
+			{
+				"command": "cleanerCSS.cleanWorkspace",
+				"title": "CleanerCSS: Clean Workspace",
+				"category": "CleanerCSS",
+				"icon": "$(workspace-trusted)"
+			},
+			{
+				"command": "cleanerCSS.cleanWorkspaceWithoutReview",
+				"title": "CleanerCSS: Clean All Without Review",
+				"category": "CleanerCSS",
+				"icon": "$(run-all)"
+			},
+			{
+				"command": "cleanerCSS.openHistory",
+				"title": "CleanerCSS: Open History",
+				"category": "CleanerCSS",
+				"icon": "$(history)"
+			},
+			{
+				"command": "cleanerCSS.restoreFromHistory",
+				"title": "CleanerCSS: Restore From History",
+				"category": "CleanerCSS",
+				"icon": "$(debug-restart)"
+			},
+			{
+				"command": "cleanerCSS.openSettings",
+				"title": "CleanerCSS: Open Settings",
+				"category": "CleanerCSS",
+				"icon": "$(settings-gear)"
+			},
+			{
+				"command": "cleanerCSS.clearHistory",
+				"title": "CleanerCSS: Clear History",
+				"category": "CleanerCSS",
+				"icon": "$(trash)"
+			},
+			{
+				"command": "cleanerCSS.deleteHistoryEntry",
+				"title": "CleanerCSS: Delete History Entry",
+				"category": "CleanerCSS",
+				"icon": "$(trash)"
+			},
+			{
+				"command": "cleanerCSS.exportReport",
+				"title": "CleanerCSS: Export Report",
+				"category": "CleanerCSS",
+				"icon": "$(json)"
+			},
+			{
+				"command": "cleanerCSS.exportPatch",
+				"title": "CleanerCSS: Export Patch",
+				"category": "CleanerCSS",
+				"icon": "$(diff)"
+			},
+			{
+				"command": "cleanerCSS.preview.accept",
+				"title": "Validate CleanerCSS Review",
+				"category": "CleanerCSS",
+				"icon": "$(check)"
+			},
+			{
+				"command": "cleanerCSS.preview.reject",
+				"title": "Cancel CleanerCSS Review",
+				"category": "CleanerCSS",
+				"icon": "$(close)"
+			},
+			{
+				"command": "cleanerCSS.preview.savePatch",
+				"title": "Save CleanerCSS Patch",
+				"category": "CleanerCSS",
+				"icon": "$(diff)"
+			},
+			{
+				"command": "cleanerCSS.preview.openReport",
+				"title": "Open CleanerCSS Report",
+				"category": "CleanerCSS",
+				"icon": "$(json)"
+			}
+		],
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "cleanerCSS",
+					"title": "CleanerCSS",
+					"icon": "resources/icon.svg"
+				}
+			]
+		},
+		"views": {
+			"cleanerCSS": [
+				{
+					"id": "cleanerCSS.history",
+					"name": "CleanerCSS History",
+					"icon": "$(history)",
+					"contextualTitle": "CleanerCSS"
+				}
+			]
+		},
+		"viewsWelcome": [
+			{
+				"view": "cleanerCSS.history",
+				"contents": "Clean and analyze CSS/SCSS safely.\n[Clean Current File](command:cleanerCSS.cleanCurrentFile)\n[Analyze Current File](command:cleanerCSS.analyzeCurrentFile)"
+			}
+		],
+		"menus": {
+			"commandPalette": [
+				{
+					"command": "cleanerCSS.cleanCurrentFile"
+				},
+				{
+					"command": "cleanerCSS.analyzeCurrentFile"
+				},
+				{
+					"command": "cleanerCSS.cleanWorkspace"
+				},
+				{
+					"command": "cleanerCSS.cleanWorkspaceWithoutReview"
+				},
+				{
+					"command": "cleanerCSS.openHistory"
+				},
+				{
+					"command": "cleanerCSS.restoreFromHistory"
+				},
+				{
+					"command": "cleanerCSS.openSettings"
+				},
+				{
+					"command": "cleanerCSS.clearHistory"
+				},
+				{
+					"command": "cleanerCSS.deleteHistoryEntry"
+				},
+				{
+					"command": "cleanerCSS.exportReport"
+				},
+				{
+					"command": "cleanerCSS.exportPatch"
+				},
+				{
+					"command": "cleanerCSS.preview.accept",
+					"when": "cleanerCSS.previewActive"
+				},
+				{
+					"command": "cleanerCSS.preview.reject",
+					"when": "cleanerCSS.previewActive"
+				},
+				{
+					"command": "cleanerCSS.preview.savePatch",
+					"when": "cleanerCSS.previewActive"
+				},
+				{
+					"command": "cleanerCSS.preview.openReport",
+					"when": "cleanerCSS.previewActive"
+				}
+			],
+			"view/title": [
+				{
+					"command": "cleanerCSS.cleanCurrentFile",
+					"when": "view == cleanerCSS.history",
+					"group": "navigation@1"
+				},
+				{
+					"command": "cleanerCSS.cleanWorkspace",
+					"when": "view == cleanerCSS.history",
+					"group": "navigation@2"
+				},
+				{
+					"command": "cleanerCSS.cleanWorkspaceWithoutReview",
+					"when": "view == cleanerCSS.history",
+					"group": "navigation@3"
+				},
+				{
+					"command": "cleanerCSS.openSettings",
+					"when": "view == cleanerCSS.history",
+					"group": "navigation@4"
+				}
+			],
+			"view/item/context": [
+				{
+					"command": "cleanerCSS.restoreFromHistory",
+					"when": "view == cleanerCSS.history && viewItem == cleanercssHistoryEntry",
+					"group": "inline@1"
+				},
+				{
+					"command": "cleanerCSS.exportPatch",
+					"when": "view == cleanerCSS.history && viewItem == cleanercssHistoryEntry",
+					"group": "inline@2"
+				},
+				{
+					"command": "cleanerCSS.deleteHistoryEntry",
+					"when": "view == cleanerCSS.history && viewItem == cleanercssHistoryEntry",
+					"group": "inline@3"
+				}
+			],
+			"editor/title": [
+				{
+					"command": "cleanerCSS.cleanCurrentFile",
+					"when": "resourceExtname == .css || resourceExtname == .scss",
+					"group": "navigation@50"
+				},
+				{
+					"command": "cleanerCSS.preview.accept",
+					"when": "cleanerCSS.previewActive",
+					"group": "navigation@1"
+				},
+				{
+					"command": "cleanerCSS.preview.reject",
+					"when": "cleanerCSS.previewActive",
+					"group": "navigation@2"
+				},
+				{
+					"command": "cleanerCSS.preview.savePatch",
+					"when": "cleanerCSS.previewActive",
+					"group": "navigation@3"
+				},
+				{
+					"command": "cleanerCSS.preview.openReport",
+					"when": "cleanerCSS.previewActive",
+					"group": "navigation@4"
+				}
+			],
+			"editor/context": [
+				{
+					"command": "cleanerCSS.cleanCurrentFile",
+					"when": "resourceExtname == .css || resourceExtname == .scss",
+					"group": "1_modification@50"
+				},
+				{
+					"command": "cleanerCSS.analyzeCurrentFile",
+					"when": "resourceExtname == .css || resourceExtname == .scss",
+					"group": "1_modification@51"
+				}
+			],
+			"explorer/context": [
+				{
+					"command": "cleanerCSS.cleanCurrentFile",
+					"when": "resourceExtname == .css || resourceExtname == .scss",
+					"group": "navigation"
+				},
+				{
+					"command": "cleanerCSS.analyzeCurrentFile",
+					"when": "resourceExtname == .css || resourceExtname == .scss",
+					"group": "navigation"
+				}
+			]
+		},
+		"configuration": {
+			"title": "CleanerCSS",
+			"properties": {
+				"cleanerCSS.includeGlobs": {
+					"type": "array",
+					"default": [
+						"**/*"
+					],
+					"items": {
+						"type": "string"
+					},
+					"description": "Workspace files scanned for selector usage."
+				},
+				"cleanerCSS.excludeGlobs": {
+					"type": "array",
+					"default": [
+						"**/node_modules/**",
+						"**/dist/**",
+						"**/build/**",
+						"**/.next/**",
+						"**/.nuxt/**",
+						"**/.svelte-kit/**",
+						"**/coverage/**",
+						"**/.git/**",
+						"**/.turbo/**",
+						"**/.vercel/**",
+						"**/.cache/**",
+						"**/env/**",
+						"**/venv/**",
+						"**/.venv/**",
+						"**/__pycache__/**",
+						"**/.pytest_cache/**",
+						"**/.mypy_cache/**"
+					],
+					"items": {
+						"type": "string"
+					},
+					"description": "Files and folders excluded from scanning."
+				},
+				"cleanerCSS.safelist": {
+					"type": "array",
+					"default": [],
+					"items": {
+						"type": "string"
+					},
+					"description": "Selectors or class/id names that must never be removed."
+				},
+				"cleanerCSS.safelistPatterns": {
+					"type": "array",
+					"default": [
+						"^is-",
+						"^has-",
+						"^js-",
+						"^swiper-",
+						"^splide",
+						"^tippy",
+						"^modal-",
+						"^toast-"
+					],
+					"items": {
+						"type": "string"
+					},
+					"description": "Regular expression patterns protecting dynamic selectors."
+				},
+				"cleanerCSS.scanDynamicStrings": {
+					"type": "boolean",
+					"default": true,
+					"description": "Scan simple strings and template strings for class-like tokens."
+				},
+				"cleanerCSS.enableScssSupport": {
+					"type": "boolean",
+					"default": true,
+					"description": "Enable conservative SCSS parsing support."
+				},
+				"cleanerCSS.minConfidenceToRemove": {
+					"type": "number",
+					"default": 0.85,
+					"minimum": 0,
+					"maximum": 1,
+					"description": "Minimum confidence required before a selector branch can be proposed for removal."
+				},
+				"cleanerCSS.preserveComments": {
+					"type": "boolean",
+					"default": true,
+					"description": "Preserve comments when generating cleaned CSS."
+				},
+				"cleanerCSS.historyLimit": {
+					"type": "number",
+					"default": 25,
+					"minimum": 1,
+					"maximum": 500,
+					"description": "Maximum number of local history entries kept."
+				},
+				"cleanerCSS.historyRetentionDays": {
+					"type": "number",
+					"default": 2,
+					"minimum": 1,
+					"maximum": 365,
+					"description": "Number of days local history entries and snapshot files are kept before automatic cleanup."
+				},
+				"cleanerCSS.ignoreSelectors": {
+					"type": "array",
+					"default": [
+						":root",
+						"html",
+						"body",
+						"*"
+					],
+					"items": {
+						"type": "string"
+					},
+					"description": "Selectors always treated as protected."
+				},
+				"cleanerCSS.ignoreFiles": {
+					"type": "array",
+					"default": [],
+					"items": {
+						"type": "string"
+					},
+					"description": "Additional file globs ignored by CleanerCSS."
+				},
+				"cleanerCSS.frameworkHints": {
+					"type": "array",
+					"default": [
+						"react",
+						"next",
+						"vue",
+						"nuxt",
+						"svelte",
+						"astro",
+						"angular",
+						"vite"
+					],
+					"items": {
+						"type": "string"
+					},
+					"description": "Framework hints that make the scanner more conservative around dynamic classes."
+				},
+				"cleanerCSS.cleanUncertainSelectors": {
+					"type": "boolean",
+					"default": false,
+					"description": "Dangerous option. When false, uncertain branches are always preserved."
+				},
+				"cleanerCSS.maxDeletionRatioBeforeStrongConfirmation": {
+					"type": "number",
+					"default": 0.3,
+					"minimum": 0,
+					"maximum": 1,
+					"description": "Ask for a stronger confirmation if proposed deletion ratio exceeds this value."
+				},
+				"cleanerCSS.analysisOutput": {
+					"type": "string",
+					"enum": [
+						"problems",
+						"markdownReport",
+						"ask"
+					],
+					"default": "problems",
+					"description": "Controls where CleanerCSS Analyze Current File shows results: VS Code Problems, a Markdown report, or ask each time."
+				},
+				"cleanerCSS.reviewMode": {
+					"type": "string",
+					"enum": [
+						"nativeDiff",
+						"ask"
+					],
+					"default": "ask",
+					"description": "Controls how CleanerCSS presents proposed changes. CleanerCSS always opens a native VS Code diff before applying changes."
+				},
+				"cleanerCSS.mcp.enableApplyTool": {
+					"type": "boolean",
+					"default": true,
+					"description": "Enable the MCP tool that can apply safe CleanerCSS changes directly with snapshots and history."
+				},
+				"cleanerCSS.mcp.enableRevertTool": {
+					"type": "boolean",
+					"default": true,
+					"description": "Enable the MCP tool that can restore CleanerCSS snapshots."
+				},
+				"cleanerCSS.mcp.defaultApplyMode": {
+					"type": "string",
+					"enum": [
+						"safe",
+						"aggressive"
+					],
+					"default": "safe",
+					"description": "Default MCP apply mode."
+				},
+				"cleanerCSS.mcp.defaultReviewMode": {
+					"type": "string",
+					"enum": [
+						"autoApply",
+						"proposeOnly"
+					],
+					"default": "proposeOnly",
+					"description": "Default review behavior when CleanerCSS changes are triggered by the MCP server."
+				},
+				"cleanerCSS.mcp.maxDeletionRatio": {
+					"type": "number",
+					"default": 0.3,
+					"minimum": 0,
+					"maximum": 1,
+					"description": "Maximum deletion ratio allowed before the MCP apply tool blocks the operation."
+				},
+				"cleanerCSS.mcp.minConfidenceToRemove": {
+					"type": "number",
+					"default": 0.85,
+					"minimum": 0,
+					"maximum": 1,
+					"description": "Minimum confidence required for the MCP apply tool to remove selectors."
+				},
+				"cleanerCSS.mcp.allowCleaningUncertain": {
+					"type": "boolean",
+					"default": false,
+					"description": "Allow MCP cleaning of uncertain selectors. Disabled by default."
+				},
+				"cleanerCSS.mcp.requireSnapshotBeforeApply": {
+					"type": "boolean",
+					"default": true,
+					"description": "Require a CleanerCSS snapshot before any MCP-applied modification."
+				}
+			}
+		}
+	},
+	"scripts": {
+		"compile": "npm run compile:extension && npm run compile:mcp",
+		"compile:extension": "tsc -p ./tsconfig.json",
+		"compile:mcp": "tsc -p ./tsconfig.mcp.json",
+		"watch": "tsc -watch -p ./",
+		"lint": "eslint src --ext ts",
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"test:extension": "vscode-test",
+		"package": "npm run compile && vsce package",
+		"prepublishOnly": "npm run compile && npm test"
+	},
+	"dependencies": {
+		"@modelcontextprotocol/sdk": "^1.29.0",
+		"diff": "^7.0.0",
+		"postcss": "^8.5.6",
+		"postcss-scss": "^4.0.9",
+		"postcss-selector-parser": "^7.1.1",
+		"zod": "^4.4.3"
+	},
+	"devDependencies": {
+		"@types/diff": "^5.2.3",
+		"@types/node": "^22.15.0",
+		"@types/vscode": "^1.93.0",
+		"@typescript-eslint/eslint-plugin": "^8.32.0",
+		"@typescript-eslint/parser": "^8.32.0",
+		"@vscode/test-cli": "^0.0.11",
+		"@vscode/test-electron": "^2.5.2",
+		"@vscode/vsce": "^3.3.2",
+		"eslint": "^9.26.0",
+		"typescript": "^5.8.3",
+		"vitest": "^3.1.3"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/alexistb2904/cleanercss"
+	},
+	"bugs": {
+		"url": "https://github.com/alexistb2904/cleanercss/issues"
+	},
+	"homepage": "https://github.com/alexistb2904/cleanercss#readme"
+}

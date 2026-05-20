@@ -1,0 +1,6 @@
+{
+  "cleanerCSS.safelist": ["modal", "tooltip", "active"],
+  "cleanerCSS.safelistPatterns": ["^is-", "^has-", "^swiper-", "^tippy"],
+  "cleanerCSS.minConfidenceToRemove": 0.9,
+  "cleanerCSS.cleanUncertainSelectors": false
+}

@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "outDir": "dist",
+    "rootDir": "src",
+    "sourceMap": true,
+    "strict": true,
+    "noImplicitOverride": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "moduleResolution": "node",
+    "ignoreDeprecations": "5.0",
+    "types": ["node", "vscode", "vitest/globals"]
+  },
+  "include": [
+    "src/extension.ts",
+    "src/commands/**/*.ts",
+    "src/config/**/*.ts",
+    "src/core/**/*.ts",
+    "src/review/**/*.ts",
+    "src/storage/**/*.ts",
+    "src/types/**/*.ts",
+    "src/vscode/**/*.ts"
+  ],
+  "exclude": ["node_modules", ".vscode-test", "src/tests/**", "src/mcp/**"]
+}

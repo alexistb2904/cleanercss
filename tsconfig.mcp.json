@@ -1,0 +1,21 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "types": ["node"],
+    "sourceMap": true
+  },
+  "include": [
+    "src/mcp-server.ts",
+    "src/mcp/**/*.ts",
+    "src/core/**/*.ts",
+    "src/review/reviewTypes.ts",
+    "src/review/reviewStatus.ts",
+    "src/review/reviewSessionStore.ts",
+    "src/review/changeRangeMapper.ts",
+    "src/review/diffHunkBuilder.ts",
+    "src/storage/**/*.ts",
+    "src/types/**/*.ts"
+  ],
+  "exclude": ["node_modules", ".vscode-test", "src/tests/**", "src/extension.ts", "src/commands/**", "src/vscode/**"]
+}
